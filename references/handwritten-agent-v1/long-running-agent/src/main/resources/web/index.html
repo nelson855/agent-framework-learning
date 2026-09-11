@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 03 · Long-running Agent Debugger</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Stage 03 · Long-running Agent 调试台</h1>
+        <p class="subtitle">观察：Context 选择 / Compaction / Checkpoint / Resume / Validator / Evaluator</p>
+    </header>
+
+    <main>
+        <!-- 左：任务输入 + 动作 -->
+        <section class="panel left">
+            <div class="panel-head">
+                <h2>任务与动作</h2>
+                <button id="auto-demo">自动演示</button>
+            </div>
+            <label for="goal">任务目标</label>
+            <textarea id="goal" rows="3">根据项目规范制定一个 6 步开发计划，每完成一步记录结果；如果中断则下次继续；最后生成符合规范的 JSON 总结。</textarea>
+            <button id="start">Start Run</button>
+
+            <div class="actions">
+                <button id="step">Step（执行一步）</button>
+                <button id="interrupt" class="warn">Simulate Interruption</button>
+                <button id="resume">Resume</button>
+                <button id="evaluate" class="accent">Evaluate（校验+评估）</button>
+            </div>
+
+            <div class="run-id-line">Run ID：<span id="run-id" class="badge">—</span></div>
+            <div id="outcome" class="outcome"></div>
+        </section>
+
+        <!-- 右：观察区 -->
+        <section class="panel right">
+            <div class="run-overview">
+                <h2>Run Overview</h2>
+                <div id="overview" class="box dim">Start 后查看</div>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <h2>Plan</h2>
+                    <div id="plan" class="box dim">Start 后查看</div>
+                </div>
+                <div class="card">
+                    <h2>Checkpoint Timeline</h2>
+                    <div id="checkpoints" class="box dim">每执行一步保存一个新版本</div>
+                </div>
+            </div>
+
+            <h2>Context Inspector</h2>
+            <div id="context" class="box dim">执行后查看本次上下文的四个来源</div>
+
+            <h2>Validation / Evaluator</h2>
+            <div id="evaluation" class="box dim">Evaluate 后查看 validator / evaluator 结果</div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 02 · 有状态 Agent 调试台</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Stage 02 · 有状态 Agent 调用台</h1>
+        <p class="subtitle">观察：对话历史（Conversation History）≠ Agent 状态（State）≠ 计划（Plan）≠ 长期记忆（Memory）</p>
+    </header>
+
+    <main>
+        <!-- 左：对话区 -->
+        <section class="panel left">
+            <div class="panel-head">
+                <h2>Conversation / Chat</h2>
+                <button id="new-conversation">新建会话</button>
+            </div>
+            <div class="conv-list" id="conv-list"></div>
+            <div class="messages" id="messages"></div>
+            <div class="input-row">
+                <input id="message-input" type="text" placeholder="输入消息，回车发送...">
+                <button id="send-button">发送</button>
+            </div>
+        </section>
+
+        <!-- 右：观察区 -->
+        <section class="panel right">
+            <div class="panel-head">
+                <h2>Current Agent State</h2>
+                <span id="conversation-id" class="badge">未选会话</span>
+            </div>
+            <div id="state" class="state-box"><span class="dim">运行 Agent 后查看状态</span></div>
+
+            <h2>Plan</h2>
+            <div id="plan" class="plan-box"><span class="dim">运行 Agent 后查看计划</span></div>
+
+            <h2>Retrieved Memory</h2>
+            <div id="memory" class="memory-box"><span class="dim">运行 Agent 后查看本轮检索到的长期记忆</span></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

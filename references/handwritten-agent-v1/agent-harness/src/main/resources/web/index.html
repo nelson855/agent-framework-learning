@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stage04 Mini Agent Harness Console</title>
+    <link rel="stylesheet" href="/web/styles.css">
+</head>
+<body>
+<header>
+    <h1>Mini Agent Harness Console</h1>
+    <p class="sub">Stage 04 · 观察 Harness：Plan / Tool / Memory / Approval / Trace / Eval</p>
+</header>
+
+<main>
+    <section class="controls">
+        <button id="demo">▶ 运行综合演示任务</button>
+        <span>runId: <b id="run-id">-</b></span>
+        <button id="refresh">⟳ 刷新</button>
+        <span id="status-line" class="dim"></span>
+    </section>
+
+    <div class="grid">
+        <!-- Task/Conversation + Run & Plan -->
+        <section class="panel" id="run-panel">
+            <h2>Task / Run &amp; Plan <span class="map">← HarnessService + Planner</span></h2>
+            <div class="overview" id="overview"></div>
+            <div class="plan" id="plan"></div>
+        </section>
+
+        <!-- Metrics -->
+        <section class="panel" id="metrics-panel">
+            <h2>Metrics <span class="map">← Evaluator</span></h2>
+            <div id="metrics"></div>
+        </section>
+
+        <!-- Tool Events -->
+        <section class="panel" id="tool-panel">
+            <h2>Tool Events <span class="map">← ToolExecutor + TraceService</span></h2>
+            <div id="tools"></div>
+        </section>
+
+        <!-- Memory / Knowledge -->
+        <section class="panel" id="memory-panel">
+            <h2>Memory / Knowledge <span class="map">← MemoryStore + KnowledgeStore</span></h2>
+            <div id="memory"></div>
+        </section>
+
+        <!-- Worker / Handoff -->
+        <section class="panel" id="worker-panel">
+            <h2>Workers / Handoff <span class="map">← Orchestrator + WorkerAgent</span></h2>
+            <div id="workers"></div>
+        </section>
+
+        <!-- Approval Queue -->
+        <section class="panel" id="approval-panel">
+            <h2>Approval Queue <span class="map">← ApprovalService</span></h2>
+            <div id="approvals"></div>
+        </section>
+
+        <!-- Trace Timeline -->
+        <section class="panel wide" id="trace-panel">
+            <h2>Trace Timeline <span class="map">← TraceService</span></h2>
+            <div id="trace"></div>
+        </section>
+    </div>
+</main>
+
+<script src="/web/app.js"></script>
+</body>
+</html>

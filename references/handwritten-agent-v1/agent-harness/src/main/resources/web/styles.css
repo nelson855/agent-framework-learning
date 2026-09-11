@@ -1,0 +1,56 @@
+:root {
+    --bg: #0f172a;
+    --panel: #1e293b;
+    --border: #334155;
+    --text: #e2e8f0;
+    --dim: #94a3b8;
+    --accent: #38bdf8;
+}
+* { box-sizing: border-box; }
+body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px;
+}
+header { padding: 14px 20px; border-bottom: 1px solid var(--border); }
+header h1 { margin: 0; font-size: 18px; }
+.sub { color: var(--dim); margin: 4px 0 0; }
+.controls { display: flex; gap: 12px; align-items: center; padding: 12px 20px; flex-wrap: wrap; }
+button {
+    background: var(--panel); color: var(--text); border: 1px solid var(--border);
+    padding: 6px 14px; cursor: pointer; border-radius: 6px;
+}
+button:hover { border-color: var(--accent); color: var(--accent); }
+.btn-ok { border-color: #16a34a; color: #4ade80; }
+.btn-no { border-color: #dc2626; color: #f87171; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 14px; padding: 0 20px 30px; }
+.panel {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px;
+}
+.panel.wide { grid-column: 1 / -1; }
+.panel h2 { margin: 0 0 10px; font-size: 13px; color: var(--accent); }
+.map { color: var(--dim); font-size: 11px; font-weight: normal; }
+.kv { display: flex; gap: 8px; padding: 2px 0; }
+.kv span { color: var(--dim); min-width: 90px; }
+.plan { margin-top: 8px; }
+.step-done { color: #4ade80; }
+.step-current { color: var(--accent); }
+.step-pending { color: var(--dim); }
+.status-waiting_approval, .status-max_step_exceeded { color: #f87171; }
+.status-completed { color: #4ade80; }
+.status-running { color: var(--accent); }
+.tool { border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; margin-bottom: 6px; }
+.tool.ok { border-left: 3px solid #16a34a; }
+.tool.err { border-left: 3px solid #dc2626; }
+.tool-name { color: var(--accent); font-weight: bold; margin-right: 8px; }
+.tool-args, .tool-result { color: var(--dim); margin-top: 2px; }
+.worker { border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin-bottom: 6px; }
+.approval { border: 1px solid var(--border); border-radius: 6px; padding: 8px; margin-bottom: 8px; }
+.approval.pending { border-color: #dc2626; }
+.approval button { margin-top: 6px; margin-right: 6px; }
+.ev { display: flex; gap: 8px; align-items: baseline; padding: 2px 0; border-bottom: 1px dashed #2a3a4f; }
+.pill {
+    border: 1px solid; border-radius: 10px; padding: 0 8px; font-size: 11px; flex-shrink: 0;
+}
+.ev-who { color: var(--dim); flex-shrink: 0; }
+.dim { color: var(--dim); }

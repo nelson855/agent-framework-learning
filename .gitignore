@@ -8,3 +8,4 @@ LOCAL_PATHS.md
 **/.pytest_cache/
 .env
 *.db-journal
+*.db

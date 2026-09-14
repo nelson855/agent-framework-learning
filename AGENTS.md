@@ -25,6 +25,7 @@
 至少读取：
 
 - 本文件；
+- `TASKS.md`（确认当前进度和下一章起点）；
 - 当前 Prompt 指定的教材章节；
 - `docs/04_Framework_Mapping规范.md`；
 - 如任务涉及 Benchmark，则读取对应 `references/handwritten-agent-v1/` 基准项目。
@@ -191,3 +192,4 @@ Web 页面仍然是“Agent 调试台”，不是产品前端。
 5. Demo 观察结果；
 6. Framework Mapping 的关键结论；
 7. 本章刻意没有实现什么。
+8. 已同步更新 `TASKS.md`：勾选完成的章节、刷新顶部的总览和日期。

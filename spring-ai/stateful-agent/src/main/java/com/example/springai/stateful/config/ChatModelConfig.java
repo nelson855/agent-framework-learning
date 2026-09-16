@@ -1,10 +1,15 @@
 package com.example.springai.stateful.config;
 
 import com.example.springai.stateful.agent.MemoryService;
+import com.example.springai.stateful.agent.PlanExecutor;
+import com.example.springai.stateful.agent.Planner;
+import com.example.springai.stateful.agent.Replanner;
 import com.example.springai.stateful.agent.TaskAgentService;
 import com.example.springai.stateful.agent.TaskTools;
+import com.example.springai.stateful.domain.AgentRunRepository;
 import com.example.springai.stateful.domain.MemoryRepository;
 import com.example.springai.stateful.domain.MessageRepository;
+import com.example.springai.stateful.domain.PlanRepository;
 import com.example.springai.stateful.domain.TaskRepository;
 import com.example.springai.stateful.domain.TaskService;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
@@ -104,5 +109,35 @@ public class ChatModelConfig {
             MemoryService memoryService,
             MessageRepository messageRepository) {
         return new TaskAgentService(chatModel, chatMemory, taskTools, memoryService, messageRepository);
+    }
+
+    @Bean
+    public PlanRepository planRepository() {
+        return new PlanRepository("jdbc:sqlite:data/spring-ai-stateful.db");
+    }
+
+    @Bean
+    public AgentRunRepository agentRunRepository() {
+        return new AgentRunRepository("jdbc:sqlite:data/spring-ai-stateful.db");
+    }
+
+    @Bean
+    public Planner planner(ChatModel chatModel) {
+        return new Planner(chatModel);
+    }
+
+    @Bean
+    public Replanner replanner(ChatModel chatModel) {
+        return new Replanner(chatModel);
+    }
+
+    @Bean
+    public PlanExecutor planExecutor(
+            Planner planner,
+            Replanner replanner,
+            TaskAgentService taskAgentService,
+            PlanRepository planRepository,
+            AgentRunRepository agentRunRepository) {
+        return new PlanExecutor(planner, replanner, taskAgentService, planRepository, agentRunRepository);
     }
 }

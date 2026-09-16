@@ -27,7 +27,7 @@
 - 本文件；
 - `TASKS.md`（确认当前进度和下一章起点）；
 - 当前 Prompt 指定的教材章节；
-- `docs/04_Framework_Mapping规范.md`；
+- `docs/04_Framework_Mapping规范.md`（含 §5 `@FW-CMP` 代码注释规范、§6 章节对比文档规范）；
 - 如任务涉及 Benchmark，则读取对应 `references/handwritten-agent-v1/` 基准项目。
 
 ## 3. references/ 是只读区
@@ -171,6 +171,8 @@ Web 页面仍然是“Agent 调试台”，不是产品前端。
 - 调试方式发生了什么变化？
 - 如果不用该框架，需要重新实现什么？
 
+代码内嵌对比与章节对比文档也是强制产物，具体要求见 `docs/04_Framework_Mapping规范.md` §5（`@FW-CMP` 代码注释）与 §6（`docs/comparisons/chNN_*.md` 章节对比文档）。优秀案例参考 `spring-ai/basic` 与 `docs/comparisons/ch02_spring_ai_basic.md`。
+
 ## 9. 测试规则
 
 每个模块至少包含：
@@ -193,3 +195,4 @@ Web 页面仍然是“Agent 调试台”，不是产品前端。
 6. Framework Mapping 的关键结论；
 7. 本章刻意没有实现什么。
 8. 已同步更新 `TASKS.md`：勾选完成的章节、刷新顶部的总览和日期。
+9. 已按 `docs/04_Framework_Mapping规范.md` §5 在代码关键差异点打上 `@FW-CMP` 标记，并按 §6 产出 `docs/comparisons/chNN_*.md` 章节对比文档；汇报中列出本章所有 `@FW-CMP` 标记位置（`grep -rn "@FW-CMP" <模块>/src` 输出）。

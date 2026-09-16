@@ -12,7 +12,13 @@ import org.springframework.ai.openai.OpenAiChatOptions;
  * 详见 {@link ModelConfig}。仓库根目录有 {@code .env.example} 模板，
  * 复制为 {@code .env} 并填入 {@code CONFIG_AGENT_MODEL_API_KEY} 后运行。
  *
+ * <p>@FW-CMP 本类对应手写版 {@code agent-harness/Main}（装配 + 启动）。
+ * 手写版要手动拼 HTTP 客户端、手动构造 HarnessService 全套依赖
+ * （Planner / ContextBuilder / ToolExecutor / Approval / Checkpoint / Trace / Evaluator），
+ * 本类只剩"装模型 + 装业务仓库 + 调一次 chat()"。
+ *
  * <p>无有效配置时直接退出并提示，不会伪造演示。
+ * 完整对比见 {@code docs/comparisons/ch02_spring_ai_basic.md}。
  */
 public class Main {
 
@@ -22,9 +28,23 @@ public class Main {
     public static void main(String[] args) {
         ModelConfig config = ModelConfig.load();
 
-        // 对照手写版 OpenAiCompatibleLlmClient（手写 HTTP 拼请求、拼工具参数）：
-        // 现在地址、Key、超时配进 builder 即可，请求格式、工具 schema 序列化都由框架处理。
-        // 注意 2.0 要求同步和异步两个客户端同时就绪，只配一个会在运行时报错。
+        // @FW-CMP [HTTP] HTTP 客户端与请求/响应序列化
+        //   手写（agent-harness/OpenAiCompatibleLlmClient.chat）：
+        //     Map<String, Object> body = new LinkedHashMap<>();
+        //     body.put("model", model);
+        //     body.put("messages", messages);
+        //     HttpRequest req = HttpRequest.newBuilder()
+        //         .uri(URI.create(baseUrl + "/chat/completions"))
+        //         .header("Authorization", "Bearer " + apiKey)
+        //         .POST(HttpRequest.BodyPublishers.ofString(toJson(body)))
+        //         .build();
+        //     // 手动发 HTTP、手动解析 /choices/0/message/content
+        //   框架（下方 builder）：
+        //     OpenAiChatModel.builder().openAiClient(...).build();
+        //     // 地址/Key/超时配进去即可，HTTP 细节和 JSON 序列化全收进框架
+        //   差异：不再写 HTTP；代价是要引入 OpenAI Java SDK 依赖，
+        //   且 Spring AI 2.0 要求同步 + 异步两个客户端都给。
+        //   完整版见 docs/comparisons/ch02_spring_ai_basic.md#3-http
         ChatModel chatModel = OpenAiChatModel.builder()
                 .openAiClient(OpenAIOkHttpClient.builder()
                         .baseUrl(config.baseUrl())

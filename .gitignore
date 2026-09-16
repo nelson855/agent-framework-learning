@@ -9,3 +9,6 @@ LOCAL_PATHS.md
 .env
 *.db-journal
 *.db
+/.claude/
+/.agents/
+/openspec/

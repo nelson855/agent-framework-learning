@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>LangChain4j Stateful Agent 调试台</title>
+<style>
+  body { font-family: sans-serif; margin: 0; display: flex; height: 100vh; }
+  #left { flex: 1; display: flex; flex-direction: column; border-right: 1px solid #ccc; padding: 12px; }
+  #right { width: 420px; overflow-y: auto; padding: 12px; background: #f7f7f7; }
+  #chat { flex: 1; overflow-y: auto; border: 1px solid #ccc; padding: 8px; margin-bottom: 8px; }
+  .msg-user { color: #0b5fff; margin: 4px 0; }
+  .msg-assistant { color: #1a7f37; margin: 4px 0; }
+  .panel { border: 1px solid #ccc; background: #fff; padding: 8px; margin-bottom: 8px; }
+  .panel h3 { margin: 0 0 6px 0; font-size: 14px; }
+  pre { white-space: pre-wrap; font-size: 12px; margin: 0; }
+  #toolbar { margin-bottom: 8px; }
+  input, button { font-size: 14px; padding: 4px; }
+</style>
+</head>
+<body>
+<div id="left">
+  <div id="toolbar">
+    用户 <input id="userId" value="u1" size="6">
+    <button onclick="newConversation()">新建会话</button>
+    <span id="convLabel">未建会话</span>
+  </div>
+  <div id="chat"></div>
+  <div>
+    <input id="goal" size="60" placeholder="输入目标，例如：帮我建一个学习任务">
+    <button onclick="sendGoal()">发送</button>
+    <button onclick="refreshDebug()">刷新右侧</button>
+  </div>
+</div>
+<div id="right">
+  <div class="panel"><h3>Current State（运行状态）</h3><pre id="state">—</pre></div>
+  <div class="panel"><h3>Plan（计划）</h3><pre id="plan">—</pre></div>
+  <div class="panel"><h3>Retrieved Memory（长期记忆）</h3><pre id="memory">—</pre></div>
+  <div class="panel"><h3>Recent Tool Calls（工具调用）</h3><pre id="tools">—</pre></div>
+  <div class="panel"><h3>Window（模型窗口）</h3><pre id="window">—</pre></div>
+</div>
+<script>
+let conversationId = null;
+let lastRunId = null;
+async function newConversation() {
+  const userId = document.getElementById('userId').value;
+  const res = await fetch('/conversations', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({userId})});
+  const data = await res.json();
+  conversationId = data.id;
+  document.getElementById('convLabel').textContent = '会话 ' + conversationId.slice(0, 8);
+  document.getElementById('chat').innerHTML = '';
+}
+async function sendGoal() {
+  if (!conversationId) await newConversation();
+  const userId = document.getElementById('userId').value;
+  const goal = document.getElementById('goal').value;
+  appendMsg('user', goal);
+  const res = await fetch(`/conversations/${conversationId}/chat`, {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({userId, goal})});
+  const data = await res.json();
+  lastRunId = data.runId;
+  await refreshAll(goal);
+}
+async function refreshAll(goal) {
+  const userId = document.getElementById('userId').value;
+  const q = goal || document.getElementById('goal').value || '';
+  if (lastRunId) {
+    const runRes = await fetch(`/runs/${lastRunId}`);
+    const runData = await runRes.json();
+    document.getElementById('state').textContent = JSON.stringify(runData.run, null, 2);
+    document.getElementById('plan').textContent = JSON.stringify(runData.plans, null, 2);
+  }
+  const dbgRes = await fetch(`/debug/conversations/${conversationId}?userId=${encodeURIComponent(userId)}&q=${encodeURIComponent(q)}`);
+  const dbg = await dbgRes.json();
+  document.getElementById('memory').textContent = JSON.stringify(dbg.memories, null, 2);
+  document.getElementById('tools').textContent = JSON.stringify(dbg.recentToolCalls, null, 2);
+  document.getElementById('window').textContent = JSON.stringify(dbg.window, null, 2);
+  const chatBox = document.getElementById('chat');
+  chatBox.innerHTML = '';
+  dbg.messages.forEach(m => appendMsg(m.role, m.content));
+}
+async function refreshDebug() { await refreshAll(); }
+function appendMsg(role, content) {
+  const div = document.createElement('div');
+  div.className = role === 'user' ? 'msg-user' : 'msg-assistant';
+  div.textContent = (role === 'user' ? '我：' : '助手：') + content;
+  document.getElementById('chat').appendChild(div);
+}
+</script>
+</body>
+</html>

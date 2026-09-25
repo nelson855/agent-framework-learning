@@ -2,16 +2,18 @@
 
 > 用途：记录整套教材 10 章的完成情况。每次开工前先读本文件感知进度，
 > 每完成一章即时勾选对应项，不要等到最后统一改。
-> 更新日期：2026-09-22
+> 更新日期：2026-09-23
 
 ## 总览
 
-- 已完成：Ch01 / Ch02 / Ch03 / Ch04（用户 2026-09-14 确认前三章；Ch04 2026-09-22 落盘）
-- 下一章：Ch05 LangChain4j 重做带状态的助手
+- 已完成：Ch01 / Ch02 / Ch03 / Ch04 / Ch05（用户 2026-09-14 确认前三章；Ch04 2026-09-22 落盘；Ch05 2026-09-23 落盘）
+- 下一章：Ch06 Spring AI 和 LangChain4j 对比
 - 备注：Ch03 的 `spring-ai/stateful-agent/` 已落盘（Stage A/B/C，2026-09-16，22 测试全过），
   含对比文档 `docs/comparisons/ch03_spring_ai_stateful.md`。
   Ch04 的 `spring-ai/advanced/` 已落盘（RAG + MCP + Observability，2026-09-22，12 测试全过），
   含对比文档 `docs/comparisons/ch04_spring_ai_advanced.md`。
+  Ch05 的 `langchain4j/stateful-agent/` 已落盘（AiServices + ChatMemoryProvider + JDK HttpServer 调试台，2026-09-23，24 测试全过），
+  含对比文档 `docs/comparisons/ch05_langchain4j_stateful.md`。
 
 ## 章节清单
 
@@ -31,10 +33,10 @@
   - 教材：`docs/chapters/04_SpringAI进阶_RAG_MCP_Observability.md`
   - 步骤：`docs/prompts/04_spring_ai_advanced.md`
   - 产物：`spring-ai/advanced/`（已落盘：17 主类 + 4 测试类 12 测试 + 对比文档 `docs/comparisons/ch04_spring_ai_advanced.md`）
-- [ ] Ch05 用 LangChain4j 重做带状态的助手
+- [x] Ch05 用 LangChain4j 重做带状态的助手
   - 教材：`docs/chapters/05_LangChain4j重做StatefulAgent.md`
   - 步骤：`docs/prompts/05_langchain4j_stateful_agent.md`
-  - 产物：`langchain4j/stateful-agent/`
+  - 产物：`langchain4j/stateful-agent/`（已落盘：22 主类 + 11 测试类 24 测试 + 对比文档 `docs/comparisons/ch05_langchain4j_stateful.md`）
 - [ ] Ch06 Spring AI 和 LangChain4j 对比
   - 教材：`docs/chapters/06_SpringAI_vs_LangChain4j.md`
   - 步骤：`docs/prompts/06_compare_java_frameworks.md`
